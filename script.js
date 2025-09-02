@@ -3,9 +3,8 @@ let currentStep = 1;
 let selectedProfil = null;
 let inputTHG = {};
 let warna = null;
-let laporanData = [];
 
-// Ganti URL ini dengan URL Web App kamu dari Google Apps Script
+// Ganti URL ini dengan URL Web App kamu dari Google Apps Script (Deploy → Web App → URL)
 const API_URL = "https://script.google.com/macros/s/AKfycbw2AgAueqvJnyopFqizNf_fzgZc2bSgwfkhJgpIZPwo7hLpBiq7Sm3sQOL3fAP5aFQB/exec";
 
 // === RENDER STEP ===
@@ -164,7 +163,7 @@ function goBackTHG() {
   renderStep();
 }
 
-function generateLaporan() {
+async function generateLaporan() {
   if (!warna) {
     alert("Pilih warna sensor!");
     return;
@@ -178,18 +177,24 @@ function generateLaporan() {
     warna: warna
   };
 
-  fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(newData),
-    headers: {"Content-Type": "application/json"}
-  })
-  .then(res => res.json())
-  .then(res => {
-    if (res.status === "success") {
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(newData),
+      headers: {"Content-Type": "application/json"}
+    });
+    const result = await res.json();
+
+    if (result.status === "success") {
       currentStep = 4;
       renderStep();
+    } else {
+      alert("Gagal menyimpan data.");
     }
-  });
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Tidak bisa terhubung ke server.");
+  }
 }
 
 function todayKey() {
@@ -197,24 +202,29 @@ function todayKey() {
   return today.toISOString().split("T")[0];
 }
 
-function loadHistory(dateKey) {
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      const filtered = data.filter(d => d.timestamp.startsWith(dateKey));
-      const laporanBody = document.getElementById("laporanBody");
-      laporanBody.innerHTML = filtered.length > 0 ? filtered.map(d=>`
-        <tr>
-          <td class="border p-2">${d.timestamp}</td>
-          <td class="border p-2">${d.nama}</td>
-          <td class="border p-2">${d.suhu}°C</td>
-          <td class="border p-2">${d.kelembapan}%</td>
-          <td class="border p-2">${d.gas} ppm</td>
-          <td class="border p-2">${d.warna}</td>
-        </tr>
-      `).join("") : `<tr><td colspan="6" class="p-4 text-gray-500">Belum ada data</td></tr>`;
-    });
+async function loadHistory(dateKey) {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    const filtered = data.filter(d => d.timestamp.startsWith(dateKey));
+    const laporanBody = document.getElementById("laporanBody");
+
+    laporanBody.innerHTML = filtered.length > 0 ? filtered.map(d=>`
+      <tr>
+        <td class="border p-2">${d.timestamp}</td>
+        <td class="border p-2">${d.nama}</td>
+        <td class="border p-2">${d.suhu} °C</td>
+        <td class="border p-2">${d.kelembapan} %</td>
+        <td class="border p-2">${d.gas} ppm</td>
+        <td class="border p-2">${d.warna}</td>
+      </tr>
+    `).join("") : `<tr><td colspan="6" class="p-4 text-gray-500">Belum ada data</td></tr>`;
+  } catch (err) {
+    console.error("Error loadHistory:", err);
+    document.getElementById("laporanBody").innerHTML =
+      `<tr><td colspan="6" class="p-4 text-red-500">Gagal ambil data</td></tr>`;
+  }
 }
 
 renderStep();
-

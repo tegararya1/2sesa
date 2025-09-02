@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Program Monitoring Sensor</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex justify-center items-start">
+  <div class="container mx-auto px-4 py-8 max-w-4xl">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">Program Monitoring Sensor</h1>
+      <p class="text-gray-600">Sistem Pemantauan dan Pelaporan Data Sensor</p>
+    </div>
+
+    <!-- Status Sensor LCD -->
+    <div class="bg-white p-6 rounded-2xl shadow-md mb-6 text-center">
+      <h2 class="text-lg font-semibold mb-4">Status Sensor LCD</h2>
+      <div class="flex justify-center space-x-10">
+        <div>
+          <div class="sensor-light sensor-red"></div>
+          <p class="text-red-600 font-bold">MERAH</p>
+          <p class="text-sm">Belum Siap</p>
+        </div>
+        <div>
+          <div class="sensor-light sensor-yellow"></div>
+          <p class="text-yellow-600 font-bold">KUNING</p>
+          <p class="text-sm">Hampir Siap</p>
+        </div>
+        <div>
+          <div class="sensor-light sensor-green"></div>
+          <p class="text-green-600 font-bold">HIJAU</p>
+          <p class="text-sm">Sudah Siap</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step Indicator -->
+    <div class="flex justify-center mb-6">
+      <div class="steps flex space-x-6 text-sm font-medium">
+        <div class="step active">1 Profil</div>
+        <div class="step">2 Input THG</div>
+        <div class="step">3 Pilih Warna</div>
+        <div class="step">4 Laporan</div>
+      </div>
+    </div>
+
+    <!-- Halaman Konten -->
+    <div id="stepContent" class="flex justify-center"></div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

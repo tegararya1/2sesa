@@ -5,7 +5,7 @@ let inputTHG = {};
 let warna = null;
 
 // === URL Web App dari Google Apps Script (Deploy → Web App → URL) ===
-const API_URL = "https://script.google.com/macros/s/AKfycbzw6cL_aF_Rv8CNS9LrUGTyoCD6lxyqCVgREdb9sMzIkNphJqUEWuSpblB9kmeptpoH/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbws4NT1zqkLNEku-7i11lPIprldP9EvdyKJ0uhG_YM8t-ZLCOfQO_SVmya9TxSh8yA/exec";
 
 // === RENDER STEP ===
 function renderStep() {
@@ -229,3 +229,4 @@ async function loadHistory(dateKey) {
 }
 
 renderStep();
+

@@ -4,7 +4,7 @@ let selectedProfil = null;
 let inputTHG = {};
 let warna = null;
 
-// === URL Web App dari Google Apps Script (Deploy → Web App → URL) ===
+// === URL Web App dari Google Apps Script ===
 const API_URL = "https://script.google.com/macros/s/AKfycby6H7X9wufJSfyZCdN2ou7bUkYnbaKZmeeeGonUQjd9U1tgfi3S7hZpmh2YN0Ghc7ON/exec";
 
 // === RENDER STEP ===
@@ -163,6 +163,7 @@ function goBackTHG() {
   renderStep();
 }
 
+// === KIRIM DATA KE SERVER ===
 async function generateLaporan() {
   if (!warna) {
     alert("Pilih warna sensor!");
@@ -184,7 +185,7 @@ async function generateLaporan() {
       headers: {"Content-Type": "application/json"}
     });
 
-    const result = await res.json(); // fix: sekarang bisa JSON bener
+    const result = await res.json();
 
     if (result.status === "success") {
       currentStep = 4;
@@ -198,6 +199,7 @@ async function generateLaporan() {
   }
 }
 
+// === AMBIL DATA HISTORY ===
 function todayKey() {
   const today = new Date();
   return today.toISOString().split("T")[0];
@@ -229,5 +231,3 @@ async function loadHistory(dateKey) {
 }
 
 renderStep();
-
-

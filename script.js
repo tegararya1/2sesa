@@ -4,7 +4,7 @@ let selectedProfil = null;
 let inputTHG = {};
 let warna = null;
 
-// Ganti URL ini dengan URL Web App kamu dari Google Apps Script (Deploy → Web App → URL)
+// === URL Web App dari Google Apps Script (Deploy → Web App → URL) ===
 const API_URL = "https://script.google.com/macros/s/AKfycbzw6cL_aF_Rv8CNS9LrUGTyoCD6lxyqCVgREdb9sMzIkNphJqUEWuSpblB9kmeptpoH/exec";
 
 // === RENDER STEP ===
@@ -183,7 +183,8 @@ async function generateLaporan() {
       body: JSON.stringify(newData),
       headers: {"Content-Type": "application/json"}
     });
-    const result = await res.json();
+
+    const result = await res.json(); // fix: sekarang bisa JSON bener
 
     if (result.status === "success") {
       currentStep = 4;
@@ -207,7 +208,7 @@ async function loadHistory(dateKey) {
     const res = await fetch(API_URL);
     const data = await res.json();
 
-    const filtered = data.filter(d => d.timestamp.startsWith(dateKey));
+    const filtered = data.filter(d => String(d.timestamp).startsWith(dateKey));
     const laporanBody = document.getElementById("laporanBody");
 
     laporanBody.innerHTML = filtered.length > 0 ? filtered.map(d=>`
@@ -228,5 +229,3 @@ async function loadHistory(dateKey) {
 }
 
 renderStep();
-
-

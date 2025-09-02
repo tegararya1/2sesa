@@ -6,7 +6,7 @@ let warna = null;
 let laporanData = [];
 
 // Ganti URL ini dengan URL Web App kamu dari Google Apps Script
-const API_URL = "https://script.google.com/macros/s/AKfycbzvOHYTXXQf6L1nWedkSBnD2aKxGlqw_Qvcx2BGh8UsRwXVQr9VZLC8xCifRFOvtQkc/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw2AgAueqvJnyopFqizNf_fzgZc2bSgwfkhJgpIZPwo7hLpBiq7Sm3sQOL3fAP5aFQB/exec";
 
 // === RENDER STEP ===
 function renderStep() {
@@ -217,3 +217,4 @@ function loadHistory(dateKey) {
 }
 
 renderStep();
+
